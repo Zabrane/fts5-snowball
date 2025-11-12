@@ -183,7 +183,7 @@ static int ftsSnowballTokenize(Fts5Tokenizer *pTokenizer, void *pCtx, int flags,
 #ifdef _WIN32
 __declspec(dllexport)
 #endif
-    int sqlite3_extension_init(sqlite3 *db, char **error, const sqlite3_api_routines *api) {
+    int sqlite3_ftsstemmer_init(sqlite3 *db, char **error, const sqlite3_api_routines *api) {
     fts5_api *ftsApi;
 
     fts5_tokenizer tokenizer = {ftsSnowballCreate, ftsSnowballDelete, ftsSnowballTokenize};
