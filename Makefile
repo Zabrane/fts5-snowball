@@ -1,8 +1,11 @@
 SQLITE_FLAGS=`pkg-config --cflags --silence-errors sqlite3`
 
 all: libstemmer fts5stemmer.o
-	cc -fPIC -shared -o fts5stemmer.so fts5stemmer.o snowball/libstemmer/libstemmer.o
-	@[ "`uname -s`" = "Darwin" ] && mv fts5stemmer.so fts5stemmer.dylib || :
+	@if [ "`uname -s`" = "Darwin" ]; then \
+		cc -fPIC -dynamiclib -undefined dynamic_lookup -o fts5stemmer.dylib fts5stemmer.o snowball/libstemmer.a; \
+	else \
+		cc -fPIC -shared -o fts5stemmer.so fts5stemmer.o snowball/libstemmer.a; \
+	fi
 
 libstemmer:
 	@if [ ! -f snowball/GNUmakefile ];then \
